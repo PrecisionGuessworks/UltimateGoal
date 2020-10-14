@@ -1,68 +1,39 @@
-/*
-17012
- */
-
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Activity;
-import java.util.Locale;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.MyRobot;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
-import java.util.Locale;
-
-
-/**
- * This file contains an example of an iterative (Non-Linear) "OpMode".
- * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
- * The names of OpModes appear on the menu of the FTC Driver Station.
- * When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- */
-
-@TeleOp(name="Testing 2", group="Iterative Opmode")
-
-public class TestMode extends OpMode {
+//////////////////////////////////////////////////////////////////////////////////////////
+@TeleOp(name="TeleopDev", group="Iterative Opmode")
+@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
+//////////////////////////////////////////////////////////////////////////////////////////
+public class TeleopDevelopment extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
+    double requestedMotorSpeeds[] = new double[2];
 
-    MyRobot robot;
+    DrivetrainSubsystem drivetrain;
+    ShooterSubsystem shooter;
+    IntakeSubsystem intake;
+    WobbleSubsystem wobble;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        //  All setup found in MyRobot
-        robot = new MyRobot(this.hardwareMap);
-        robot.configureMotorDirection();
+        drivetrain = new DrivetrainSubsystem(this.hardwareMap);
+        shooter = new ShooterSubsystem(this.hardwareMap);
+        intake = new IntakeSubsystem(this.hardwareMap);
+        wobble = new WobbleSubsystem(this.hardwareMap);
 
         // Set up our telemetry dashboard
         getTelemetry();
 
         // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized    :)");
+        telemetry.addLine("Status: Initialized   :)");
+        telemetry.update();
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -90,25 +61,22 @@ public class TestMode extends OpMode {
         double flywheelValue = 0.65;
         double acceleratorValue = 0.8;
 
-        if (gamepad1.cross) {
-            robot.setMotors(acceleratorValue, flywheelValue);
+        if (gamepad1.cross) {           // for shooter testing
+            shooter.setShooter(flywheelValue, acceleratorValue);
             telemetry.addData("Shoot the", "pew pew. \nBoth motors should be spinning.");
-            telemetry.update();
-        } else if (gamepad1.square) {
-            robot.setMotors(0, flywheelValue);
+        } else if (gamepad1.square) {   // for flywheel only testing
+            shooter.setFlywheel(flywheelValue);
             telemetry.addData("Flying wheel spinning with speed of ", flywheelValue);
-            telemetry.update();
-        } else if (gamepad1.circle) {
-            robot.setMotors(acceleratorValue, 0);
+        } else if (gamepad1.circle) {   // for accelerator only testing
+            shooter.setAccelerator(acceleratorValue);
             telemetry.addData("Accelerator wheel spinning with speed of ", acceleratorValue);
-            telemetry.update();
-        } else if (gamepad1.triangle) {
-            robot.runVexMotor(.5);
-            telemetry.addData("Vex Motor spin .4", "TRIANGLE PUSHED");
-        } else {
-            robot.stopAllMotors();
-            robot.runVexMotor(0);
+        } else if (gamepad1.triangle) { // for testing other things...
+            telemetry.addLine("TRIANGLE PUSHED");
+        } else {                        // stop all
+            shooter.stopAll();
         }
+        
+        requestedMotorSpeeds = drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         // Call Telemetry
         getTelemetry();
@@ -120,23 +88,29 @@ public class TestMode extends OpMode {
     /* Code to run ONCE after the driver hits STOP */
     @Override
     public void stop() {
-        telemetry.addData("Robot Stopped. ", "Have a nice day.");
+        telemetry.addLine("Robot Stopped. Have a nice day. :)");
         telemetry.addData("Final runtime: ", runtime.toString());
         telemetry.update();
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-    /*                              TELEOP-SPECIFIC METHODS                                 */
+/*                              TELEOP-SPECIFIC METHODS                                 */
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
     public void getTelemetry() {
+        int shooterEncoders[] = new int[2];
+        shooterEncoders = shooter.readShooterEncoders();
+
         // Show the elapsed game time
         telemetry.addData("Status", "Run Time: " + runtime.toString());
 
         // Telemetry about motion
         //telemetry.addData("Motors", "leftFront (%.2f), rightFront (%.2f), rightRear (%.2f), leftRear (%.2f)", telemValues[0], telemValues[1], telemValues[2], telemValues[3]);
+        telemetry.addLine("Current Motor Encoder Readings.");
+        telemetry.addData("Accelerator", shooterEncoders[1]);
+        telemetry.addData("Flywheel", shooterEncoders[2]);
         telemetry.update();
     }  // getTelemetry
 

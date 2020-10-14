@@ -4,52 +4,26 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Activity;
-import java.util.Locale;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.MyRobot;
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
-import org.firstinspires.ftc.robotcore.external.Func;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-
-import java.util.Locale;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="Testing 2", group="Iterative Opmode")
+@TeleOp(name="Class-Based Test Mode", group="Iterative Opmode")
 // @Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
-public class TestMode extends OpMode {
+public class TestModeBeta extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-    MyRobot robot;
+    ShooterSubsystem shooter;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        //  All setup found in MyRobot
-        robot = new MyRobot(this.hardwareMap);
+        shooter = new ShooterSubsystem(this.hardwareMap);
 
         // Set up our telemetry dashboard
         getTelemetry();
@@ -84,21 +58,20 @@ public class TestMode extends OpMode {
         double acceleratorValue = 0.8;
 
         if (gamepad1.cross) {
-            robot.setMotors(acceleratorValue, flywheelValue);
-            telemetry.addData("Shoot the", "pew pew. \nBoth motors should be spinning.");
+            shooter.setShooter(flywheelValue, acceleratorValue);
+            telemetry.addLine("Shoot the pew pew. \nBoth motors should be spinning.");
         } else if (gamepad1.square) {
-            robot.setMotors(0, flywheelValue);
-            telemetry.addData("Flying wheel spinning with speed of ", flywheelValue);
+            shooter.setFlywheel(flywheelValue);
+            telemetry.addData("Flying wheel spinning with value of ", flywheelValue);
         } else if (gamepad1.circle) {
-            robot.setMotors(acceleratorValue, 0);
-            telemetry.addData("Accelerator wheel spinning with speed of ", acceleratorValue);
+            shooter.setAccelerator(acceleratorValue);
+            telemetry.addData("Accelerator wheel spinning with value of ", acceleratorValue);
         } else if (gamepad1.triangle) {
-            robot.runVexMotor(.5);
-            telemetry.addData("Vex Motor spin .4", "TRIANGLE PUSHED");
-        } else {
-            robot.stopAllMotors();
-            robot.runVexMotor(0);
+            telemetry.addLine("TRIANGLE PUSHED");
+        } else {                        // stop all
+            shooter.stopAll();
         }
+
 
         // Call Telemetry
         getTelemetry();
