@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class WobbleSubsystem {
-    //hewwo
+    //hewwo.
     private DcMotor wobbleMotor;
 
     public WobbleSubsystem(HardwareMap hardwareMap) {
