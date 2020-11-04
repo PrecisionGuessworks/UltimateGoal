@@ -50,12 +50,12 @@ public class MyRobot {
 //        rightFront = hardwareMap.get(DcMotor.class, "FR");
 //        rightRear = hardwareMap.get(DcMotor.class, "BR");
 //        revServo = hardwareMap.servo.get("revservo");
-        accelerator = hardwareMap.get(DcMotor.class, "accelerator");
-        flywheel = hardwareMap.get(DcMotor.class, "flywheel");
+        //accelerator = hardwareMap.get(DcMotor.class, "accelerator");
+        //flywheel = hardwareMap.get(DcMotor.class, "flywheel");
         vexMotor = hardwareMap.get(CRServo.class, "vexmotor");
-
-        accelerator.setDirection(DcMotor.Direction.FORWARD);
-        flywheel.setDirection(DcMotor.Direction.REVERSE);
+        revServo = hardwareMap.get(Servo.class, "revservo");
+        //accelerator.setDirection(DcMotor.Direction.FORWARD);
+        //flywheel.setDirection(DcMotor.Direction.REVERSE);
 
     }   // MyRobot(HardwareMap)
 
@@ -85,9 +85,12 @@ public class MyRobot {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-    public void runVexMotor (double speed) {
+    public void runCRServo (double speed) {
         vexMotor.setPower(speed);
     }
 
+    public void setServo (double position) {
+        revServo.setPosition(position);
+    }
 
 } // The Almighty Curly Brace for Everything

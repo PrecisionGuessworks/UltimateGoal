@@ -17,6 +17,9 @@ public class ShooterSubsystem {
         accelerator.setDirection(DcMotor.Direction.REVERSE);
         flywheel.setDirection(DcMotor.Direction.REVERSE);
 
+        accelerator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         botStuff = new BotUtilities();
     }
 
@@ -35,8 +38,8 @@ public class ShooterSubsystem {
 
     public int[] readShooterEncoders() {
         int encoderValues[] = new int[2];
-        encoderValues[1] = botStuff.readEncoder(accelerator);
-        encoderValues[2] = botStuff.readEncoder(flywheel);
+        encoderValues[0] = botStuff.readEncoder(accelerator);
+        encoderValues[1] = botStuff.readEncoder(flywheel);
         return encoderValues;
     }
 
