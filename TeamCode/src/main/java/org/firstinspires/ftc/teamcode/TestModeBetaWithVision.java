@@ -6,22 +6,22 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="Class-Based Test Mode", group="Iterative Opmode")
+@TeleOp(name="Test Mode with Vision", group="Iterative Opmode")
 // @Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
-public class TestModeBeta extends OpMode {
+public class TestModeBetaWithVision extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     Servo myServo;
     ShooterSubsystem shooter;
     Servo revServo;
+    ConceptTensorFlowObjectDetection vision;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,11 +29,17 @@ public class TestModeBeta extends OpMode {
     @Override
     public void init() {
         shooter = new ShooterSubsystem(this.hardwareMap);
+        vision = new ConceptTensorFlowObjectDetection(this.hardwareMap);
         myServo = hardwareMap.get(Servo.class, "vexmotor");
         revServo = hardwareMap.get(Servo.class, "revservo");
         myServo.setDirection(REVERSE);
         // Set up our telemetry dashboard
         getTelemetry();
+
+        // Vision Setup
+        vision.initVuforia();
+        vision.initTfod();
+        vision.activateTfod();
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized    :)");
@@ -93,6 +99,7 @@ public class TestModeBeta extends OpMode {
             //revServo.setPosition(0);
         }
 
+        vision.runVisionSystem();
 
         // Call Telemetry
         getTelemetry();
@@ -104,6 +111,7 @@ public class TestModeBeta extends OpMode {
     /* Code to run ONCE after the driver hits STOP */
     @Override
     public void stop() {
+        vision.deactivateTfod();
         telemetry.addData("Robot Stopped. ", "Have a nice day.");
         telemetry.addData("Final runtime: ", runtime.toString());
         telemetry.update();
