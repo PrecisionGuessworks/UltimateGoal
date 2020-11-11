@@ -29,7 +29,7 @@ public class TestModeBetaWithVision extends OpMode {
     @Override
     public void init() {
         shooter = new ShooterSubsystem(this.hardwareMap);
-        vision = new ConceptTensorFlowObjectDetection(this.hardwareMap);
+        vision = new ConceptTensorFlowObjectDetection(this.hardwareMap, this.telemetry);
         myServo = hardwareMap.get(Servo.class, "vexmotor");
         revServo = hardwareMap.get(Servo.class, "revservo");
         myServo.setDirection(REVERSE);
@@ -40,6 +40,7 @@ public class TestModeBetaWithVision extends OpMode {
         vision.initVuforia();
         vision.initTfod();
         vision.activateTfod();
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized    :)");

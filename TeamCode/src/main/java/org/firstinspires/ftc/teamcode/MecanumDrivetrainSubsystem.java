@@ -4,11 +4,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class MecanumDrivetrainSubsystem {
     DcMotor frontLeft, frontRight, backLeft, backRight;
     BotUtilities botStuff;
 
-    public MecanumDrivetrainSubsystem(HardwareMap hardwareMap) {
+    public MecanumDrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemtry) {
         frontLeft  = hardwareMap.get(DcMotor.class, "frontleft");
         backLeft  = hardwareMap.get(DcMotor.class, "backleft");
         frontRight = hardwareMap.get(DcMotor.class, "frontright");
