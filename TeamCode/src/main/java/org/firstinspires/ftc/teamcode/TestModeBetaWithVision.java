@@ -9,6 +9,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.ConceptTensorFlowObjectDetection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+
 import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -21,26 +26,26 @@ public class TestModeBetaWithVision extends OpMode {
     Servo myServo;
     ShooterSubsystem shooter;
     Servo revServo;
-    ConceptTensorFlowObjectDetection vision;
-
+    VisionSubsystem vision;
+    WebcamName theWebcam;
 //////////////////////////////////////////////////////////////////////////////////////////
 
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
         shooter = new ShooterSubsystem(this.hardwareMap);
-        vision = new ConceptTensorFlowObjectDetection(this.hardwareMap, this.telemetry);
+        vision = new VisionSubsystem(this.hardwareMap, this.telemetry);
+
+        // temporary adds for testing purposes
         myServo = hardwareMap.get(Servo.class, "vexmotor");
         revServo = hardwareMap.get(Servo.class, "revservo");
         myServo.setDirection(REVERSE);
+
         // Set up our telemetry dashboard
         getTelemetry();
 
         // Vision Setup
-        vision.initVuforia();
-        vision.initTfod();
-        vision.activateTfod();
-
+        vision.startupVision();
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized    :)");

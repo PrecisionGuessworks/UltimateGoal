@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.Camera;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -19,7 +22,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 
-public class ConceptTensorFlowObjectDetection {
+public class VisionSubsystem  {
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
     private static final String LABEL_SECOND_ELEMENT = "Single";
@@ -33,10 +36,26 @@ public class ConceptTensorFlowObjectDetection {
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
 
-    public ConceptTensorFlowObjectDetection(HardwareMap hardwareMap, Telemetry telemetry) {
+    private HardwareMap hardwareMap;
+    private Telemetry telemetry;
+
+
+    public VisionSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam1");;
+        vuforia = ClassFactory.getInstance().createVuforia(parameters);
+
+        this.hardwareMap = hardwareMap;
+        this.telemetry = telemetry;
     }
 
-    public void activateTfod() {
+    public void startupVision() {
+        initTfod();
+        activateTfod();
+    }
+
+    private void activateTfod() {
         if (tfod != null) {
             tfod.activate();
         }
@@ -85,26 +104,10 @@ public class ConceptTensorFlowObjectDetection {
         }
     }
 
-    /* Initialize the Vuforia localization engine. */
-    public void initVuforia() {
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         */
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
-
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraDirection = CameraDirection.BACK;
-
-        //  Instantiate the Vuforia engine
-        vuforia = ClassFactory.getInstance().createVuforia(parameters);
-
-        // Loading trackables is not necessary for the TensorFlow Object Detection engine.
-    }
-
     /* Initialize the TensorFlow Object Detection engine. */
-    public void initTfod() {
+    private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-            "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfodParameters.minResultConfidence = 0.8f;
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);

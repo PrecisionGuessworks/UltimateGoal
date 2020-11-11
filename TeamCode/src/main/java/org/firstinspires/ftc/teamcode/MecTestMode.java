@@ -25,7 +25,7 @@ public class MecTestMode extends OpMode {
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        mecdrivetrain = new MecanumDrivetrainSubsystem(this.hardwareMap);
+        mecdrivetrain = new MecanumDrivetrainSubsystem(this.hardwareMap, this.telemetry);
 
         // Set up our telemetry dashboard
         getTelemetry();

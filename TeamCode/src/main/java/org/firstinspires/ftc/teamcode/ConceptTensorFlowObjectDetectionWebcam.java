@@ -51,8 +51,8 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "TensorFlow Object Detection Webcam", group = "Concept")
-@Disabled
+@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+//@Disabled
 public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Quad";
@@ -70,15 +70,21 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
      * Once you've obtained a license key, copy the string from the Vuforia web site
      * and paste it in to your code on the next line, between the double quotes.
      */
-    private static final String VUFORIA_KEY =
-            "AYcChBn/////AAABmY183vEhzE9BlrJknwN+gRtU/NR46gxnIKh/7HuMYk1TP834tuS7U1xHtrKdVMakKHeXN+vi3MraHTIZENUZld6kqPa+Bf6rQWp2ZeWe0Trh/7oBf9VWcfl05lfsSCRQLg6Cfg0fucYoc0tT7tcAI42kzReGF3u7pEH+QmeVR0vTd9d5yAcEMqMAlfO3EOZA3hhSIcZAnfAp1QvstfgXpn/yBVOWqjuNYPtdfPP73Z7RH1vqq25o0HTDrATXTy2C7HtFCPD91ha+YgB5XpZTPxOJPVnhnVfhinn8vxeRzgkBsN1fntRWH2e8/Gp3jqZrH2sbVLnhwVPAXgV+tIeIWkX/c2ZHtpyMj/99rWfENs7g";
+    private static final String VUFORIA_KEY = "AYcChBn/////AAABmY183vEhzE" +
+            "9BlrJknwN+gRtU/NR46gxnIKh/7HuMYk1TP834tuS7U1xHtrKdVMakKHeXN+vi3M" +
+                    "raHTIZENUZld6kqPa+Bf6rQWp2ZeWe0Trh/7oBf9VWcfl05lfsSCRQLg6Cfg0fuc" +
+                    "Yoc0tT7tcAI42kzReGF3u7pEH+QmeVR0vTd9d5yAcEMqMAlfO3EOZA3hhSIcZAnfA" +
+                    "p1QvstfgXpn/yBVOWqjuNYPtdfPP73Z7RH1vqq25o0HTDrATXTy2C7HtFCPD91ha+Y" +
+                    "gB5XpZTPxOJPVnhnVfhinn8vxeRzgkBsN1fntRWH2e8/Gp3jqZrH2sbVLnhwVPAXgV+t" +
+                    "IeIWkX/c2ZHtpyMj/99rWfENs7g";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
      */
     private VuforiaLocalizer vuforia;
-
+    private String stackCount = "test";
+    private String stupidMessage = "default";
     /**
      * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
      * Detection engine.
@@ -125,13 +131,25 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
                       telemetry.addData("# Object Detected", updatedRecognitions.size());
                       // step through the list of recognitions and display boundary info.
                       int i = 0;
+                      stackCount = "";
                       for (Recognition recognition : updatedRecognitions) {
                         telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                         telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                                 recognition.getLeft(), recognition.getTop());
                         telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                                 recognition.getRight(), recognition.getBottom());
+                        stackCount = recognition.getLabel();
                       }
+
+                      if (stackCount.equalsIgnoreCase("Single")) {
+                          stupidMessage = "Yay Single!";
+                      } else if (stackCount.equalsIgnoreCase("Quad")) {
+                          stupidMessage = "Q's suck";
+                      } else {
+                          stupidMessage = "Hello darkness my old friend :c";
+                      }
+
+                      telemetry.addLine(stupidMessage);
                       telemetry.update();
                     }
                 }
@@ -153,7 +171,7 @@ public class ConceptTensorFlowObjectDetectionWebcam extends LinearOpMode {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam1");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
