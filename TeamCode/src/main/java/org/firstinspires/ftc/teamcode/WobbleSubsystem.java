@@ -4,13 +4,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class WobbleSubsystem {
-    //hewwo.
-    private DcMotor wobbleMotor;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-    public WobbleSubsystem(HardwareMap hardwareMap) {
+public class WobbleSubsystem {
+    private DcMotor wobbleMotor;
+    Telemetry telemetry;
+
+    public WobbleSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         wobbleMotor = hardwareMap.get(DcMotor.class, "wobble");
         wobbleMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.telemetry = telemetry;
     }
 
 }

@@ -23,17 +23,17 @@ import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 public class TestModeBetaWithVision extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    Servo myServo;
     ShooterSubsystem shooter;
-    Servo revServo;
     VisionSubsystem vision;
-    WebcamName theWebcam;
+
+    Servo myServo;
+    Servo revServo;
 //////////////////////////////////////////////////////////////////////////////////////////
 
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        shooter = new ShooterSubsystem(this.hardwareMap);
+        shooter = new ShooterSubsystem(this.hardwareMap, this.telemetry);
         vision = new VisionSubsystem(this.hardwareMap, this.telemetry);
 
         // temporary adds for testing purposes

@@ -35,9 +35,13 @@ public class TestAutoMode extends LinearOpMode {
         DrivetrainSubsystem drivetrain;
         IntakeSubsystem intake;
         WobbleSubsystem wobble;
+        VisionSubsystem vision = new VisionSubsystem(this.hardwareMap, this.telemetry);
 
         // End of auto initialization
         waitForStart();
+        ///////////////////////////////////////////////////////////////////
+
+        selectAuto(vision.runVisionSystem());
 
     }   // Run OpMode
 
@@ -45,6 +49,28 @@ public class TestAutoMode extends LinearOpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+
+    public void selectAuto(String visionReading) {
+        if (visionReading.equalsIgnoreCase("Single")) {
+            runOneRingAuto();
+        } else if (visionReading.equalsIgnoreCase("Quad")) {
+            runFourRingAuto();
+        } else {
+            runNoRingAuto();
+        }
+    }
+
+    public void runNoRingAuto(){
+
+    }
+
+    public void runOneRingAuto(){
+
+    }
+
+    public void runFourRingAuto(){
+
+    }
 
     public void getTelemetry() {
         /*telemetry.addData("Y1 Encoder: ", robot.getY1Disp());

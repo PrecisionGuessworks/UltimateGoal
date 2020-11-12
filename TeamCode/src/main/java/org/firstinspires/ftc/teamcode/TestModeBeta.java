@@ -19,19 +19,20 @@ import static com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE;
 
 public class TestModeBeta extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    Servo myServo;
     ShooterSubsystem shooter;
-    Servo revServo;
+
+    Servo myServo, revServo;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        shooter = new ShooterSubsystem(this.hardwareMap);
+        shooter = new ShooterSubsystem(hardwareMap, telemetry);
         myServo = hardwareMap.get(Servo.class, "vexmotor");
         revServo = hardwareMap.get(Servo.class, "revservo");
         myServo.setDirection(REVERSE);
+
         // Set up our telemetry dashboard
         getTelemetry();
 
@@ -114,6 +115,8 @@ public class TestModeBeta extends OpMode {
 /*                              TELEOP-SPECIFIC METHODS                                 */
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+
+    
 
     public void getTelemetry() {
         // Show the elapsed game time

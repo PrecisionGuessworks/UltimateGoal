@@ -39,6 +39,8 @@ public class VisionSubsystem  {
     private HardwareMap hardwareMap;
     private Telemetry telemetry;
 
+    private String currentVisionReading = "";
+
 
     public VisionSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -67,7 +69,7 @@ public class VisionSubsystem  {
         }
     }
 
-    public void runVisionSystem() {
+    public String runVisionSystem() {
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
@@ -83,6 +85,7 @@ public class VisionSubsystem  {
                     // step through the list of recognitions and display boundary info.
                     int i = 0;
                     for (Recognition recognition : updatedRecognitions) {
+                        currentVisionReading = "";
                         telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                         telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                                 recognition.getLeft(), recognition.getTop());
@@ -92,16 +95,20 @@ public class VisionSubsystem  {
                         // check label to see which target zone to go after.
                         if (recognition.getLabel().equals("Single")) {
                             telemetry.addData("Target Zone", "B");
+                            currentVisionReading = "Single";
                         } else if (recognition.getLabel().equals("Quad")) {
                             telemetry.addData("Target Zone", "C");
+                            currentVisionReading = "Quad";
                         } else {
                             telemetry.addData("Target Zone", "UNKNOWN");
+                            currentVisionReading = "None";
                         }
                     }
                 }
                 telemetry.update();
             }
         }
+        return currentVisionReading;
     }
 
     /* Initialize the TensorFlow Object Detection engine. */

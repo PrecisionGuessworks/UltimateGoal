@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DrivetrainSubsystem {
     private DcMotor frontLeft, backLeft, frontRight, backRight;
     BotUtilities botStuff;
+    Telemetry telemetry;
 
-    public DrivetrainSubsystem(HardwareMap hardwareMap) {
+    public DrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         frontLeft  = hardwareMap.get(DcMotor.class, "frontleft");
         backLeft  = hardwareMap.get(DcMotor.class, "backleft");
         frontRight = hardwareMap.get(DcMotor.class, "frontright");
@@ -24,7 +25,9 @@ public class DrivetrainSubsystem {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        botStuff = new BotUtilities();
+        this.telemetry = telemetry;
+
+        botStuff = new BotUtilities(telemetry);
     }
 
     public void setMotors(double leftSpeed, double rightSpeed) {
@@ -40,10 +43,10 @@ public class DrivetrainSubsystem {
 
     public int[] readDrivetrainEncoders() {
         int encoderValues[] = new int[4];
-        encoderValues[1] = botStuff.readEncoder(frontLeft);
-        encoderValues[2] = botStuff.readEncoder(backLeft);
-        encoderValues[3] = botStuff.readEncoder(frontRight);
-        encoderValues[4] = botStuff.readEncoder(backRight);
+        encoderValues[1] = botStuff.getEncoderValue(frontLeft);
+        encoderValues[2] = botStuff.getEncoderValue(backLeft);
+        encoderValues[3] = botStuff.getEncoderValue(frontRight);
+        encoderValues[4] = botStuff.getEncoderValue(backRight);
         return encoderValues;
     }
 

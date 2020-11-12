@@ -26,7 +26,7 @@ public class MecanumDrivetrainSubsystem {
         //frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        botStuff = new BotUtilities();
+        botStuff = new BotUtilities(telemtry);
     }
 
     public void setMotors(double FL, double BL, double FR, double BR) {
@@ -56,10 +56,10 @@ public class MecanumDrivetrainSubsystem {
 
     public int[] readDrivetrainEncoders() {
         int encoderValues[] = new int[4];
-        encoderValues[0] = botStuff.readEncoder(frontLeft);
-        encoderValues[1] = botStuff.readEncoder(backLeft);
-        encoderValues[2] = botStuff.readEncoder(frontRight);
-        encoderValues[3] = botStuff.readEncoder(backRight);
+        encoderValues[0] = botStuff.getEncoderValue(frontLeft);
+        encoderValues[1] = botStuff.getEncoderValue(backLeft);
+        encoderValues[2] = botStuff.getEncoderValue(frontRight);
+        encoderValues[3] = botStuff.getEncoderValue(backRight);
         return encoderValues;
     }
 
