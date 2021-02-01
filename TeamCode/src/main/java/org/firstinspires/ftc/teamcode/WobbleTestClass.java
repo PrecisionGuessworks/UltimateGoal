@@ -4,13 +4,14 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 @TeleOp(name="Wobble Test Mode", group="Iterative Opmode")
-// @Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
+@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
 public class WobbleTestClass extends OpMode {
@@ -24,7 +25,7 @@ public class WobbleTestClass extends OpMode {
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        shooter = new ShooterSubsystem(this.hardwareMap);
+        shooter = new ShooterSubsystem(this.hardwareMap, this.telemetry);
         robot = new MyRobot(this.hardwareMap);
 
         // Set up our telemetry dashboard

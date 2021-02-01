@@ -10,10 +10,10 @@ public class DrivetrainSubsystem {
     Telemetry telemetry;
 
     public DrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
-        frontLeft  = hardwareMap.get(DcMotor.class, "frontleft");
-        backLeft  = hardwareMap.get(DcMotor.class, "backleft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontright");
-        backRight = hardwareMap.get(DcMotor.class, "backright");
+        frontLeft  = hardwareMap.get(DcMotor.class, "FL");
+        backLeft  = hardwareMap.get(DcMotor.class, "BL");
+        frontRight = hardwareMap.get(DcMotor.class, "FR");
+        backRight = hardwareMap.get(DcMotor.class, "BR");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -59,11 +59,11 @@ public class DrivetrainSubsystem {
         leftDrive = throttle + direction;
         rightDrive = throttle - direction;
 
-        motorSpeeds[1] = leftDrive;
-        motorSpeeds[2] = rightDrive;
+        motorSpeeds[0] = leftDrive;
+        motorSpeeds[1] = rightDrive;
         motorSpeeds = normalize(motorSpeeds);
 
-        setMotors(motorSpeeds[1], motorSpeeds[2]);
+        setMotors(motorSpeeds[0], motorSpeeds[1]);
 
         return motorSpeeds;
     }   // arcadeDrive

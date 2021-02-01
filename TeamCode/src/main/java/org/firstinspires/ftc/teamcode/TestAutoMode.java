@@ -25,8 +25,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MyRobot;
 import java.util.Locale;
 
-@Autonomous(name = "TestAuto", group = "Testing")
-@Disabled                            // Comment this out to add to the opmode list
+@Autonomous(name = "Vision TestAuto", group = "Testing")
+//@Disabled                            // Comment this out to add to the opmode list
 public class TestAutoMode extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -58,18 +58,19 @@ public class TestAutoMode extends LinearOpMode {
         } else {
             runNoRingAuto();
         }
+        telemetry.update();
     }
 
     public void runNoRingAuto(){
-
+        telemetry.addLine("Running the No Ring Auto");
     }
 
     public void runOneRingAuto(){
-
+        telemetry.addLine("Running the One Ring Auto");
     }
 
     public void runFourRingAuto(){
-
+        telemetry.addLine("Running the Four Ring Auto");
     }
 
     public void getTelemetry() {
