@@ -92,7 +92,7 @@ public class TeleopDevelopment extends OpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     private void checkDriverController() {
-        requestedMotorSpeeds = drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+        requestedMotorSpeeds = drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
     }
 
     private void checkOperatorController() {

@@ -50,6 +50,10 @@ public class DrivetrainSubsystem {
         return encoderValues;
     }
 
+    public void tankDrive(double left, double right) {
+        setMotors(deadband(left), deadband(right));
+    }
+
     public double[] arcadeDrive(double throttle, double direction) {
         double motorSpeeds[] = new double[2];
         double leftDrive, rightDrive;
