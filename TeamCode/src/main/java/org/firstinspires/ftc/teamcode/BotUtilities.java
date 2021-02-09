@@ -11,13 +11,14 @@ public class BotUtilities {
         this.telemetry = telemetry;
     }
 
-    // TODO: Check if encoder values are int or double
+    // TODO: Check if encoder values are int or double. (probably int?)
     public int getEncoderValue(DcMotor motor) {
         return motor.getCurrentPosition();
     }
 
-    public void readEncoder(DcMotor motor) {
+    public void printEncoder(DcMotor motor) {
         telemetry.addData(String.valueOf(motor), motor.getCurrentPosition());
     }
+
 
 }

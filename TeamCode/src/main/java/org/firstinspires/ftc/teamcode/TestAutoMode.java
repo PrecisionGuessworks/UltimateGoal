@@ -37,6 +37,7 @@ public class TestAutoMode extends LinearOpMode {
         WobbleSubsystem wobble;
         VisionSubsystem vision = new VisionSubsystem(this.hardwareMap, this.telemetry);
 
+        vision.startupVision();
         // End of auto initialization
         waitForStart();
         ///////////////////////////////////////////////////////////////////
