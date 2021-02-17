@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 @TeleOp(name="TeleopDev", group="Iterative Opmode")
-//@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
+@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 public class TeleopDevelopment extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();

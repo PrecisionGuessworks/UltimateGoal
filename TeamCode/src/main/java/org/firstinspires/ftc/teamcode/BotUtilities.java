@@ -11,7 +11,6 @@ public class BotUtilities {
         this.telemetry = telemetry;
     }
 
-    // TODO: Check if encoder values are int or double. (probably int?)
     public int getEncoderValue(DcMotor motor) {
         return motor.getCurrentPosition();
     }
@@ -20,5 +19,13 @@ public class BotUtilities {
         telemetry.addData(String.valueOf(motor), motor.getCurrentPosition());
     }
 
+    public void delay(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            // no-op
+        }
+
+    }
 
 }

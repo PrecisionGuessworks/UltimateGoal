@@ -11,10 +11,10 @@ public class MecanumDrivetrainSubsystem {
     BotUtilities botStuff;
 
     public MecanumDrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemtry) {
-        frontLeft  = hardwareMap.get(DcMotor.class, "frontleft");
-        backLeft  = hardwareMap.get(DcMotor.class, "backleft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontright");
-        backRight = hardwareMap.get(DcMotor.class, "backright");
+        frontLeft  = hardwareMap.get(DcMotor.class, "FL");
+        backLeft  = hardwareMap.get(DcMotor.class, "BL");
+        frontRight = hardwareMap.get(DcMotor.class, "FR");
+        backRight = hardwareMap.get(DcMotor.class, "BR");
 
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);

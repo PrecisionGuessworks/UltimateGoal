@@ -20,10 +20,10 @@ public class DrivetrainSubsystem {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         this.telemetry = telemetry;
 
@@ -52,6 +52,20 @@ public class DrivetrainSubsystem {
 
     public void tankDrive(double left, double right) {
         setMotors(deadband(left), deadband(right));
+    }
+
+    public void driveTankForTime(double left, double right, int time) {
+        tankDrive(left, right);
+        botStuff.delay(time);
+        stopDriving();
+    }
+
+    public void turn(double turnSpeed, String direction) {
+        int dirControl = 1;
+        if (direction.equalsIgnoreCase("left")) {
+            dirControl = -1;
+        }
+        driveTankForTime(turnSpeed * dirControl, turnSpeed * -dirControl, 250);
     }
 
     public double[] arcadeDrive(double throttle, double direction) {

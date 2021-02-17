@@ -28,20 +28,32 @@ import java.util.Locale;
 @Autonomous(name = "Vision TestAuto", group = "Testing")
 //@Disabled                            // Comment this out to add to the opmode list
 public class TestAutoMode extends LinearOpMode {
+    ShooterSubsystem shooter;
+    DrivetrainSubsystem drivetrain;
+    IntakeSubsystem intake;
+    WobbleSubsystem wobble;
+    VisionSubsystem vision;
+    BotUtilities utilities;
+
     @Override
+
     public void runOpMode() {
         // Initialize auto:
-        ShooterSubsystem shooter;
-        DrivetrainSubsystem drivetrain;
-        IntakeSubsystem intake;
-        WobbleSubsystem wobble;
-        VisionSubsystem vision = new VisionSubsystem(this.hardwareMap, this.telemetry);
+        drivetrain = new DrivetrainSubsystem(this.hardwareMap, this.telemetry);
+        vision = new VisionSubsystem(this.hardwareMap, this.telemetry);
+        utilities = new BotUtilities(this.telemetry);
 
         vision.startupVision();
         // End of auto initialization
         waitForStart();
         ///////////////////////////////////////////////////////////////////
 
+        // Drive to ring stack location
+        drivetrain.tankDrive(0.5, 0.5);
+        utilities.delay(250);
+        drivetrain.stopDriving();
+
+        // Identify and Run correct automode
         selectAuto(vision.runVisionSystem());
 
     }   // Run OpMode
@@ -63,15 +75,21 @@ public class TestAutoMode extends LinearOpMode {
     }
 
     public void runNoRingAuto(){
-        telemetry.addLine("Running the No Ring Auto");
+        // Target Zone A. (close)
+        telemetry.addLine("Running the No Ring Auto. Heading to zone A.");
+        drivetrain.driveTankForTime(0.7, 0.7, 3);
+        drivetrain.turn(0.5, "right");
+        drivetrain.driveTankForTime(0.7, 0.7, 3);
     }
 
     public void runOneRingAuto(){
-        telemetry.addLine("Running the One Ring Auto");
+        // Target Zone B. (mid)
+        telemetry.addLine("Running the One Ring Auto. Heading to zone B.");
     }
 
     public void runFourRingAuto(){
-        telemetry.addLine("Running the Four Ring Auto");
+        // Target Zone C. (far)
+        telemetry.addLine("Running the Four Ring Auto. Heading to zone C.");
     }
 
     public void getTelemetry() {

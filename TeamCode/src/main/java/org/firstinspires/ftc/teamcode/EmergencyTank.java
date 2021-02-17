@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 @TeleOp(name="EmergencyTank", group="Iterative Opmode")
-//@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
+@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 public class EmergencyTank extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -92,6 +93,8 @@ public class EmergencyTank extends OpMode {
 
     private void checkDriverController() {
         drivetrain.tankDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        telemetry.addData("Left stick value: ", gamepad1.left_stick_y);
+        telemetry.addData("Right stick value: ", gamepad1.right_stick_y);
     }
 
     private void checkOperatorController() {
