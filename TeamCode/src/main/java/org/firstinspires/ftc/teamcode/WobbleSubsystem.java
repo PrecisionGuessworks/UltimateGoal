@@ -21,7 +21,7 @@ public class WobbleSubsystem {
         this.telemetry = telemetry;
     }
 
-    public void setWobbleMotor(double speed) {
+    public void setWobbleMotorPower(double speed) {
         wobbleMotor.setPower(speed);
     }
 

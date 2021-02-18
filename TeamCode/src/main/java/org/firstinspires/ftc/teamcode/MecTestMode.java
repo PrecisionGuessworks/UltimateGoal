@@ -59,7 +59,7 @@ public class MecTestMode extends OpMode {
     public void loop() {
         checkDriverController();
         mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        wobbleSubsystem.setArmPower(gamepad1.left_trigger - gamepad1.right_trigger);
+        wobbleSubsystem.setWobbleMotorPower(gamepad1.left_trigger - gamepad1.right_trigger);
         
         // Call Telemetry
         getTelemetry();
