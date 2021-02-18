@@ -13,7 +13,7 @@ import java.util.Map;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 @TeleOp(name="Mec Test Mode", group="Iterative Opmode")
-//@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
+@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
 public class MecTestMode extends OpMode {
