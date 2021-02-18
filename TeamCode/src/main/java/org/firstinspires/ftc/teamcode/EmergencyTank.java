@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 @TeleOp(name="EmergencyTank", group="Iterative Opmode")
-@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
+//@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 public class EmergencyTank extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -17,7 +17,7 @@ public class EmergencyTank extends OpMode {
     VisionSubsystem vision;
     //ShooterSubsystem shooter;
     //IntakeSubsystem intake;
-    //WobbleSubsystem wobble;
+    WobbleSubsystem wobble;
     //MyRobot robot;
     BotUtilities botstuff;
 
@@ -29,7 +29,7 @@ public class EmergencyTank extends OpMode {
         drivetrain = new DrivetrainSubsystem(hardwareMap, telemetry);
 //        shooter = new ShooterSubsystem(hardwareMap, telemetry);
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
-//        wobble = new WobbleSubsystem(hardwareMap, telemetry);
+        wobble = new WobbleSubsystem(hardwareMap, telemetry);
         botstuff = new BotUtilities(telemetry);
         vision = new VisionSubsystem(hardwareMap, telemetry);
 
@@ -55,6 +55,7 @@ public class EmergencyTank extends OpMode {
     public void start() {
         runtime.reset();
         getTelemetry();
+        wobble.closeServo();
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -95,6 +96,20 @@ public class EmergencyTank extends OpMode {
         drivetrain.tankDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
         telemetry.addData("Left stick value: ", gamepad1.left_stick_y);
         telemetry.addData("Right stick value: ", gamepad1.right_stick_y);
+
+        if (gamepad1.left_bumper) {
+            wobble.setWobbleMotor(0.5);
+        } else if (gamepad1.right_bumper) {
+            wobble.setWobbleMotor(-0.5);
+        } else {
+            wobble.setWobbleMotor(0);
+        }
+
+        if (gamepad1.square) {
+            wobble.closeServo();
+        } else if (gamepad1.circle) {
+            wobble.openServo();
+        }
     }
 
     private void checkOperatorController() {
