@@ -20,6 +20,7 @@ public class MecTestMode extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     MyRobot robot;
     MecanumDrivetrainSubsystem mecdrivetrain;
+    WobbleSubsystem wobbleSubsystem;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -27,7 +28,7 @@ public class MecTestMode extends OpMode {
     @Override
     public void init() {
         mecdrivetrain = new MecanumDrivetrainSubsystem(this.hardwareMap, this.telemetry);
-
+        wobbleSubsystem = new WobbleSubsystem(this.hardwareMap, this.telemetry);
         // Set up our telemetry dashboard
         getTelemetry();
 
@@ -57,7 +58,9 @@ public class MecTestMode extends OpMode {
     @Override
     public void loop() {
         checkDriverController();
-        mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, -gamepad1.right_stick_x);
+        mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        wobbleSubsystem.setArmPower(gamepad1.left_trigger - gamepad1.right_trigger);
+        
         // Call Telemetry
         getTelemetry();
 
