@@ -54,6 +54,10 @@ public class MecanumDrivetrainSubsystem {
         return wheelSpeeds;
     }   //normalize
 
+    public void stopDriving(){
+        setMotors(0,0,0,0);
+    }
+
     public int[] readDrivetrainEncoders() {
         int encoderValues[] = new int[4];
         encoderValues[0] = botStuff.getEncoderValue(frontLeft);
