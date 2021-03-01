@@ -12,15 +12,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.Map;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="Mec Test Mode", group="Iterative Opmode")
-@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
+@TeleOp(name="Mec Mode", group="Mecanum")
+//@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
 public class MecTestMode extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
-    MyRobot robot;
+    BotUtilities utilities;
     MecanumDrivetrainSubsystem mecdrivetrain;
-    WobbleSubsystem wobbleSubsystem;
+    WobbleSubsystem wobble;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +28,8 @@ public class MecTestMode extends OpMode {
     @Override
     public void init() {
         mecdrivetrain = new MecanumDrivetrainSubsystem(this.hardwareMap, this.telemetry);
-        wobbleSubsystem = new WobbleSubsystem(this.hardwareMap, this.telemetry);
+        wobble = new WobbleSubsystem(this.hardwareMap, this.telemetry);
+        utilities = new BotUtilities(this.telemetry);
         // Set up our telemetry dashboard
         getTelemetry();
 
@@ -58,9 +59,7 @@ public class MecTestMode extends OpMode {
     @Override
     public void loop() {
         checkDriverController();
-        mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        wobbleSubsystem.setWobbleMotorPower(gamepad1.left_trigger - gamepad1.right_trigger);
-        
+
         // Call Telemetry
         getTelemetry();
 
@@ -83,7 +82,25 @@ public class MecTestMode extends OpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     public void checkDriverController() {
-        //mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+
+        telemetry.addData("Left stick value: ", gamepad1.left_stick_y);
+        telemetry.addData("Right stick value: ", gamepad1.right_stick_y);
+
+        if (gamepad1.left_bumper) {
+            wobble.setWobbleMotorPower(0.5);
+        } else if (gamepad1.right_bumper) {
+            wobble.setWobbleMotorPower(-0.5);
+        } else {
+            wobble.setWobbleMotorPower(0);
+        }
+
+        if (gamepad1.square) {
+            wobble.closeMecServo();
+        } else if (gamepad1.circle) {
+            wobble.openMecServo();
+        }
+
         if (gamepad1.triangle) {
             telemetry.addLine("triangle");
         }

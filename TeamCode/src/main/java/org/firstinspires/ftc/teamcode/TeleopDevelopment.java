@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="TeleopDev", group="Iterative Opmode")
-@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
+@TeleOp(name="Arcade Teleop", group="Iterative Opmode")
+//@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 public class TeleopDevelopment extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -17,7 +17,7 @@ public class TeleopDevelopment extends OpMode {
     VisionSubsystem vision;
     //ShooterSubsystem shooter;
     //IntakeSubsystem intake;
-    //WobbleSubsystem wobble;
+    WobbleSubsystem wobble;
     //MyRobot robot;
     BotUtilities botstuff;
 
@@ -29,7 +29,7 @@ public class TeleopDevelopment extends OpMode {
         drivetrain = new DrivetrainSubsystem(hardwareMap, telemetry);
 //        shooter = new ShooterSubsystem(hardwareMap, telemetry);
 //        intake = new IntakeSubsystem(hardwareMap, telemetry);
-//        wobble = new WobbleSubsystem(hardwareMap, telemetry);
+        wobble = new WobbleSubsystem(hardwareMap, telemetry);
         botstuff = new BotUtilities(telemetry);
         vision = new VisionSubsystem(hardwareMap, telemetry);
 
@@ -69,7 +69,7 @@ public class TeleopDevelopment extends OpMode {
         //double acceleratorValue = 0.8;
 
         //requestedMotorSpeeds = drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
-        String word = vision.runVisionSystem();
+        //String word = vision.runVisionSystem();
         // Call Telemetry
         getTelemetry();
 
@@ -92,7 +92,23 @@ public class TeleopDevelopment extends OpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     private void checkDriverController() {
-        requestedMotorSpeeds = drivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        requestedMotorSpeeds = drivetrain.arcadeDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_x);
+        telemetry.addData("Left stick value: ", gamepad1.left_stick_y);
+        telemetry.addData("Right stick value: ", gamepad1.right_stick_y);
+
+        if (gamepad1.left_bumper) {
+            wobble.setWobbleMotorPower(0.5);
+        } else if (gamepad1.right_bumper) {
+            wobble.setWobbleMotorPower(-0.5);
+        } else {
+            wobble.setWobbleMotorPower(0);
+        }
+
+        if (gamepad1.square) {
+            wobble.closeTankServo();
+        } else if (gamepad1.circle) {
+            wobble.openTankServo();
+        }
     }
 
     private void checkOperatorController() {

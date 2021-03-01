@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="EmergencyTank", group="Iterative Opmode")
+@TeleOp(name="EmergencyTank", group="Tank")
 //@Disabled       // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 public class EmergencyTank extends OpMode {
@@ -55,7 +55,7 @@ public class EmergencyTank extends OpMode {
     public void start() {
         runtime.reset();
         getTelemetry();
-        wobble.closeServo();
+        //wobble.closeTankServo();
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -93,22 +93,23 @@ public class EmergencyTank extends OpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     private void checkDriverController() {
-        drivetrain.tankDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        drivetrain.tankDrive(-gamepad1.right_stick_y, -gamepad1.left_stick_y);
+        //drivetrain.tankDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
         telemetry.addData("Left stick value: ", gamepad1.left_stick_y);
         telemetry.addData("Right stick value: ", gamepad1.right_stick_y);
 
         if (gamepad1.left_bumper) {
-            wobble.setWobbleMotor(0.5);
+            wobble.setWobbleMotorPower(0.5);
         } else if (gamepad1.right_bumper) {
-            wobble.setWobbleMotor(-0.5);
+            wobble.setWobbleMotorPower(-0.5);
         } else {
-            wobble.setWobbleMotor(0);
+            wobble.setWobbleMotorPower(0);
         }
 
         if (gamepad1.square) {
-            wobble.closeServo();
+            wobble.closeTankServo();
         } else if (gamepad1.circle) {
-            wobble.openServo();
+            wobble.openTankServo();
         }
     }
 

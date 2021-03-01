@@ -1,33 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.app.Activity;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import android.graphics.Color;
-import android.view.View;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.MyRobot;
-import java.util.Locale;
 
-@Autonomous(name = "Vision TestAuto", group = "Tank")
+@Autonomous(name = "Mec Vision TestAuto", group = "Mec")
 //@Disabled                            // Comment this out to add to the opmode list
-public class TestAutoMode extends LinearOpMode {
+public class MecVisionAutoMode extends LinearOpMode {
     ShooterSubsystem shooter;
     DrivetrainSubsystem drivetrain;
     IntakeSubsystem intake;
@@ -51,12 +29,13 @@ public class TestAutoMode extends LinearOpMode {
 
         // Drive to ring stack location
         drivetrain.tankDrive(0.5, 0.5);
-        utilities.delay(250);
+        utilities.delay(650);
         drivetrain.stopDriving();
+        utilities.delay(500);
 
         // Identify and Run correct automode
         selectAuto(vision.runVisionSystem());
-
+        utilities.delay(2000);
     }   // Run OpMode
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -78,9 +57,6 @@ public class TestAutoMode extends LinearOpMode {
     public void runNoRingAuto(){
         // Target Zone A. (close)
         telemetry.addLine("Running the No Ring Auto. Heading to zone A.");
-        drivetrain.driveTankForTime(0.7, 0.7, 3);
-        drivetrain.turn(0.5, "right");
-        drivetrain.driveTankForTime(0.7, 0.7, 3);
     }
 
     public void runOneRingAuto(){

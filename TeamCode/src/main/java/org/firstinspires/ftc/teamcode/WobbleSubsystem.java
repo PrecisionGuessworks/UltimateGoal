@@ -25,11 +25,19 @@ public class WobbleSubsystem {
         wobbleMotor.setPower(speed);
     }
 
-    public void closeServo(){
+    public void closeMecServo(){
         wobbleServo.setPosition(1);
     }
 
-    public void openServo(){
-        wobbleServo.setPosition(0);
+    public void openMecServo(){
+        wobbleServo.setPosition(0.1);
+    }
+
+    public void closeTankServo() {
+        wobbleServo.setPosition(.75);
+    }
+
+    public void openTankServo() {
+        wobbleServo.setPosition(1);
     }
 }
