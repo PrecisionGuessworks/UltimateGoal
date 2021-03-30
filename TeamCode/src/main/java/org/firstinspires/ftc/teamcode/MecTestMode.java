@@ -102,7 +102,9 @@ public class MecTestMode extends OpMode {
         }
 
         if (gamepad1.triangle) {
-            telemetry.addLine("triangle");
+            wobble.openWobbleClampServo();
+        } else if (gamepad1.cross) {
+            wobble.closeWobbleClampServo();
         }
     }
 
