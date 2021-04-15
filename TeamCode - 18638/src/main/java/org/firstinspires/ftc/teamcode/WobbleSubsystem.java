@@ -10,9 +10,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class WobbleSubsystem {
     private DcMotor wobbleMotor;
-    private CRServo wobbleIntakeServoLeft, wobbleIntakeServoRight;
+    private CRServo wobbleIntakeServos;
     Telemetry telemetry;
-    private double wobbleIntakeSpeed = 1;
 
     public WobbleSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         // Wobble Mech Rotation Motor
@@ -21,21 +20,16 @@ public class WobbleSubsystem {
         wobbleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Wobble Intake (Compliant Wheels)
-        wobbleIntakeServoLeft = hardwareMap.get(CRServo.class, "wobbleIntakeServoLeft");
-        wobbleIntakeServoLeft.setDirection(CRServo.Direction.REVERSE);
-        wobbleIntakeServoRight = hardwareMap.get(CRServo.class, "wobbleIntakeServoRight");
-        wobbleIntakeServoRight.setDirection(CRServo.Direction.FORWARD);
-
+        wobbleIntakeServos = hardwareMap.get(CRServo.class, "wobbleIntakeServos");
+        wobbleIntakeServos.setDirection(CRServo.Direction.REVERSE);
         this.telemetry = telemetry;
     }
 
     public void runWobbleIntakeIn(){
-        wobbleIntakeServoLeft.setPower(wobbleIntakeSpeed);
-        wobbleIntakeServoRight.setPower(wobbleIntakeSpeed);
+        wobbleIntakeServos.setPower(1);
     }
     public void runWobbleIntakeOut(){
-        wobbleIntakeServoLeft.setPower(-wobbleIntakeSpeed);
-        wobbleIntakeServoRight.setPower(-wobbleIntakeSpeed);
+        wobbleIntakeServos.setPower(-1);
     }
 
     public void setWobbleMotorPower(double speed) {

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class IntakeSubsystem {
     private DcMotor intakeMotor;
-    private Servo intakeServoLeft, intakeServoRight;
+    private Servo intakeServos;
     Telemetry telemetry;
     private double intakeDeployTarget = 0.5;
     private double intakeStowTarget = 1;
@@ -20,9 +20,8 @@ public class IntakeSubsystem {
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Intake Servos
-        intakeServoLeft = hardwareMap.get(Servo.class, "intakeServoLeft");
-        intakeServoRight = hardwareMap.get(Servo.class, "intakeServoRight");
-        intakeServoRight.setDirection(Servo.Direction.REVERSE);
+        intakeServos = hardwareMap.get(Servo.class, "intakeServoLeft");
+        intakeServos.setDirection(Servo.Direction.REVERSE);
 
         this.telemetry = telemetry;
     }
@@ -34,12 +33,10 @@ public class IntakeSubsystem {
         intakeMotor.setPower(-speed);
     }
     public void deployIntake(){
-        intakeServoRight.setPosition(intakeDeployTarget);
-        intakeServoLeft.setPosition(intakeDeployTarget);
+        intakeServos.setPosition(0.5);
     }
     public void stowIntake(){
-        intakeServoLeft.setPosition(intakeStowTarget);
-        intakeServoRight.setPosition(intakeStowTarget);
+        intakeServos.setPosition(1);
     }
 
 }
