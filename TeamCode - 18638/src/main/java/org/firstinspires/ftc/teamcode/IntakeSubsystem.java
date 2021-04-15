@@ -14,8 +14,12 @@ public class IntakeSubsystem {
     private double intakeStowTarget = 1;
 
     public IntakeSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
+        // Intake Motor
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Intake Servos
         intakeServoLeft = hardwareMap.get(Servo.class, "intakeServoLeft");
         intakeServoRight = hardwareMap.get(Servo.class, "intakeServoRight");
         intakeServoRight.setDirection(Servo.Direction.REVERSE);
@@ -32,6 +36,10 @@ public class IntakeSubsystem {
     public void deployIntake(){
         intakeServoRight.setPosition(intakeDeployTarget);
         intakeServoLeft.setPosition(intakeDeployTarget);
+    }
+    public void stowIntake(){
+        intakeServoLeft.setPosition(intakeStowTarget);
+        intakeServoRight.setPosition(intakeStowTarget);
     }
 
 }

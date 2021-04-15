@@ -9,15 +9,18 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class WobbleSubsystem {
-    private CRServo wobbleMotor; // Motor running on SPARKmini
+    private DcMotor wobbleMotor;
     private CRServo wobbleIntakeServoLeft, wobbleIntakeServoRight;
     Telemetry telemetry;
     private double wobbleIntakeSpeed = 1;
 
     public WobbleSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
-        wobbleMotor = hardwareMap.get(CRServo.class, "wobbleArm");
+        // Wobble Mech Rotation Motor
+        wobbleMotor = hardwareMap.get(DcMotor.class, "wobbleArm");
         wobbleMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        wobbleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        // Wobble Intake (Compliant Wheels)
         wobbleIntakeServoLeft = hardwareMap.get(CRServo.class, "wobbleIntakeServoLeft");
         wobbleIntakeServoLeft.setDirection(CRServo.Direction.REVERSE);
         wobbleIntakeServoRight = hardwareMap.get(CRServo.class, "wobbleIntakeServoRight");

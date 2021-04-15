@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -7,24 +8,20 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class MecanumDrivetrainSubsystem {
-    DcMotor frontLeft, frontRight, backLeft, backRight;
+    private DcMotor backRight;
+    private CRServo frontLeft, frontRight, backLeft;
     BotUtilities botStuff;
 
     public MecanumDrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemtry) {
-        frontLeft  = hardwareMap.get(DcMotor.class, "FL");
-        backLeft  = hardwareMap.get(DcMotor.class, "BL");
-        frontRight = hardwareMap.get(DcMotor.class, "FR");
+        frontLeft  = hardwareMap.get(CRServo.class, "FL");
+        backLeft  = hardwareMap.get(CRServo.class, "BL");
+        frontRight = hardwareMap.get(CRServo.class, "FR");
         backRight = hardwareMap.get(DcMotor.class, "BR");
 
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(CRServo.Direction.FORWARD);
+        backLeft.setDirection(CRServo.Direction.REVERSE);
+        frontRight.setDirection(CRServo.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-
-        //frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         botStuff = new BotUtilities(telemtry);
     }
@@ -58,14 +55,6 @@ public class MecanumDrivetrainSubsystem {
         setMotors(0,0,0,0);
     }
 
-    public int[] readDrivetrainEncoders() {
-        int encoderValues[] = new int[4];
-        encoderValues[0] = botStuff.getEncoderValue(frontLeft);
-        encoderValues[1] = botStuff.getEncoderValue(backLeft);
-        encoderValues[2] = botStuff.getEncoderValue(frontRight);
-        encoderValues[3] = botStuff.getEncoderValue(backRight);
-        return encoderValues;
-    }
 
     public double deadband(double x) {
         double deadBand = 0.1;
