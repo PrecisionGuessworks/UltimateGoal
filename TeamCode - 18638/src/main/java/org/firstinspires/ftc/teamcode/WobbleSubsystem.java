@@ -15,7 +15,7 @@ public class WobbleSubsystem {
 
     public WobbleSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         // Wobble Mech Rotation Motor
-        wobbleMotor = hardwareMap.get(DcMotor.class, "wobbleArm");
+        wobbleMotor = hardwareMap.get(DcMotor.class, "wobbleMotor");
         wobbleMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         wobbleMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -26,10 +26,10 @@ public class WobbleSubsystem {
     }
 
     public void runWobbleIntakeIn(){
-        wobbleIntakeServos.setPower(1);
+        wobbleIntakeServos.setPower(-1);
     }
     public void runWobbleIntakeOut(){
-        wobbleIntakeServos.setPower(-1);
+        wobbleIntakeServos.setPower(1);
     }
 
     public void setWobbleMotorPower(double speed) {

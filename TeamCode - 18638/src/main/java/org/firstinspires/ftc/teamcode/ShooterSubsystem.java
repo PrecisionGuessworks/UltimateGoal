@@ -14,7 +14,7 @@ public class ShooterSubsystem {
     BotUtilities botStuff;
 
     public ShooterSubsystem (HardwareMap hardwareMap, Telemetry telemetry) {
-        flywheel = hardwareMap.get(DcMotor.class, "flywheel");
+        flywheel = hardwareMap.get(DcMotor.class, "shooterMotor");
         flywheel.setDirection(DcMotor.Direction.REVERSE);
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 

@@ -20,7 +20,7 @@ public class IntakeSubsystem {
         intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Intake Servos
-        intakeServos = hardwareMap.get(Servo.class, "intakeServoLeft");
+        intakeServos = hardwareMap.get(Servo.class, "intakeServos");
         intakeServos.setDirection(Servo.Direction.REVERSE);
 
         this.telemetry = telemetry;

@@ -8,15 +8,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class MecanumDrivetrainSubsystem {
-    private DcMotor backRight;
-    private CRServo frontLeft, frontRight, backLeft;
+    private CRServo frontLeft, frontRight, backLeft, backRight;
     BotUtilities botStuff;
 
     public MecanumDrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemtry) {
         frontLeft  = hardwareMap.get(CRServo.class, "FL");
         backLeft  = hardwareMap.get(CRServo.class, "BL");
         frontRight = hardwareMap.get(CRServo.class, "FR");
-        backRight = hardwareMap.get(DcMotor.class, "BR");
+        backRight = hardwareMap.get(CRServo.class, "BR");
 
         frontLeft.setDirection(CRServo.Direction.FORWARD);
         backLeft.setDirection(CRServo.Direction.REVERSE);

@@ -94,14 +94,12 @@ public class TestModeBetaWithVision extends OpMode {
             shooter.setFlywheel(-0.5);
             telemetry.addData("Flying wheel spinning with value of ", flywheelValue);
         } else if (gamepad1.circle) {
-            shooter.setAccelerator(acceleratorValue);
             telemetry.addData("Accelerator wheel spinning with value of ", acceleratorValue);
         } else if (gamepad1.triangle) {
             telemetry.addLine("TRIANGLE PUSHEDy");
             //myServo.setPower(.8);
             revServo.setPosition(.8);
         } else {                        // stop all
-            shooter.stopAll();
             //myServo.setPower(0);
             //revServo.setPosition(0);
         }

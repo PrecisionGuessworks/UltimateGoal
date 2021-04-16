@@ -23,6 +23,7 @@ public class MecTestMode extends OpMode {
     WobbleSubsystem wobble;
     IntakeSubsystem intake;
     ShooterSubsystem shooter;
+    ConveyorSubsystem conveyor;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -31,12 +32,15 @@ public class MecTestMode extends OpMode {
     public void init() {
         mecdrivetrain = new MecanumDrivetrainSubsystem(this.hardwareMap, this.telemetry);
         wobble = new WobbleSubsystem(this.hardwareMap, this.telemetry);
+        intake = new IntakeSubsystem(this.hardwareMap, this.telemetry);
+        shooter = new ShooterSubsystem(this.hardwareMap, this.telemetry);
+        conveyor = new ConveyorSubsystem(this.hardwareMap, this.telemetry);
         utilities = new BotUtilities(this.telemetry);
         // Set up our telemetry dashboard
         getTelemetry();
 
         // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized    :)");
+        telemetry.addData("Status", "Initialized    \nEggCheese 2: Electric Boogaloo is ready to play.\n\n:)");
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -61,6 +65,7 @@ public class MecTestMode extends OpMode {
     @Override
     public void loop() {
         checkDriverController();
+        checkOperatorController();
 
         // Call Telemetry
         getTelemetry();
@@ -85,29 +90,53 @@ public class MecTestMode extends OpMode {
 
     public void checkDriverController() {
         mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        /*
+        Desired controller functions:
+         - normal mecanum driving with shooter/wobble end of robot as front
+         - ability to press/hold button to make driving in reverse (aka intaking) easier
+         */
+    }
 
-        telemetry.addData("Left stick value: ", gamepad1.left_stick_y);
-        telemetry.addData("Right stick value: ", gamepad1.right_stick_y);
-
-        if (gamepad1.left_bumper) {
-            wobble.setWobbleMotorPower(0.5);
-        } else if (gamepad1.right_bumper) {
-            wobble.setWobbleMotorPower(-0.5);
-        } else {
-            wobble.setWobbleMotorPower(0);
-        }
-
-        if (gamepad1.square) {
-            wobble.closeMecServo();
-        } else if (gamepad1.circle) {
-            wobble.openMecServo();
-        }
-
-        if (gamepad1.triangle) {
-            wobble.openWobbleClampServo();
-        } else if (gamepad1.cross) {
-            wobble.closeWobbleClampServo();
-        }
+    public void checkOperatorController(){
+        /*
+        Desired controller function:
+        - The operator has many tasks that need to be mapped
+        - Wobble Control
+            - Use of single joy stick to deploy/retract wobble mech
+                - pull down to deploy
+                - push up to retract
+                - (we like airplanes around here)
+            - Button control for intaking
+                - Servos in
+                - Servos out
+                - probably should be press and hold
+        - Intake Control
+            - Push button deploy/retract
+                - This action is servo driven, so we can hit specific targets
+                - Do we want a manual override? If yes, throw in joystick control
+                    - pull down to deploy
+                    - push up to retract
+            - Push button control for intaking
+                - Motors in
+                - Motors out
+        - Conveyor Control
+            - Most of the time, the conveyor probably should be tied in with other
+             systems, however, it's probably wise to also include manual overrides
+            - Moving up/down
+                - D-pad control preferred
+                - up for up
+                - down for down
+        - Shooter control
+            - Push button to start acceleration
+                - Shooter does not get up to speed super fast, operator should be
+                able to do this early without a commit to shoot yet
+            - Push button to shot ring
+                - Ideally, this should only be doable if the shooter is up to
+                speed, the shooter will be encoder driven, so this should be
+                checkable
+            - Push button to stop shooter
+            - Do we want/need to be able to spin it backwards during a match?
+         */
     }
 
     public void getTelemetry() {
