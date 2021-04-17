@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.BotUtilities;
 
 // THE PEW-PEW SUBSYSTEM
 public class ShooterSubsystem {
@@ -22,13 +23,15 @@ public class ShooterSubsystem {
         this.telemetry = telemetry;
     }
 
-    public void setFlywheel(double speed) {
-        flywheel.setPower(speed);
+    public void setPower(double power) {
+        flywheel.setPower(power);
     }
 
-    public void setShooter(double flywheelSpeed, double acceleratorSpeed) {
+
+    /*
+    public void setShooterSpeed(double flywheelSpeed, double acceleratorSpeed) {
         setFlywheel(flywheelSpeed);
-    }
+    }*/
 
     public int[] readShooterEncoders() {
         int encoderValues[] = new int[2];

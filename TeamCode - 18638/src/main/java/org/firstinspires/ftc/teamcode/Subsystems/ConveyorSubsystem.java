@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,8 +9,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class ConveyorSubsystem {
     private DcMotor conveyorMotor;
     Telemetry telemetry;
-    private double conSpeedForShooting = 1;
-    private double conSpeedForIntaking = 0.25;
+    private static final double POWERFORSHOOTING = 1;
+    private static final double POWERFORINTAKING = 0.25;
 
     public ConveyorSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
@@ -19,12 +19,16 @@ public class ConveyorSubsystem {
     }
 
     public void runConveyorUpIntaking(){
-        conveyorMotor.setPower(conSpeedForIntaking);
+        conveyorMotor.setPower(POWERFORINTAKING);
     }
     public void runConveyorUpShooting(){
-        conveyorMotor.setPower(conSpeedForShooting);
+        conveyorMotor.setPower(POWERFORSHOOTING);
     }
     public void flushConveyorDown(){
         conveyorMotor.setPower(-1);
+    }
+
+    public void idle(){
+        conveyorMotor.setPower(0.0);
     }
 }

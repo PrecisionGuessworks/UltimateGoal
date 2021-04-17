@@ -4,12 +4,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import java.util.Map;
+import org.firstinspires.ftc.teamcode.Subsystems.ConveyorSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.MecanumDrivetrainSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.WobbleSubsystem;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 @TeleOp(name="Mec Mode", group="Mecanum")
@@ -98,6 +101,7 @@ public class MecTestMode extends OpMode {
     }
 
     public void checkOperatorController(){
+
         /*
         Desired controller function:
         - The operator has many tasks that need to be mapped
@@ -110,6 +114,28 @@ public class MecTestMode extends OpMode {
                 - Servos in
                 - Servos out
                 - probably should be press and hold
+         */
+        //Wobble Control
+        if (gamepad2.right_trigger > 0.1){
+            wobble.runIntakeIn();
+        }else if(gamepad2.left_trigger > 0.1){
+            wobble.runIntakeOut();
+        }else{
+            wobble.runIntakeIdle();
+        }
+
+        if (Math.abs(gamepad2.left_stick_y) > 0.1){
+            wobble.setArmPower(gamepad2.left_stick_y);
+        }else {
+            wobble.setArmPower(0.0);
+        }
+
+
+
+
+
+
+        /*
         - Intake Control
             - Push button deploy/retract
                 - This action is servo driven, so we can hit specific targets
@@ -119,6 +145,32 @@ public class MecTestMode extends OpMode {
             - Push button control for intaking
                 - Motors in
                 - Motors out
+        */
+        //Intake Control
+        if(gamepad2.triangle){
+            intake.stowIntakeArms();
+        }else if(gamepad2.cross){
+            intake.deployIntakeArms();
+        }else if(Math.abs(gamepad2.right_stick_y) > 0.1){
+            intake.manualAdjustArms(gamepad2.right_stick_y/50.0);
+        }
+
+        if(gamepad2.circle){
+            intake.runIntakeIn(0.8);
+            telemetry.addLine("circle - intake in");
+        }else if(gamepad2.square){
+            intake.runIntakeOut(0.8);
+            telemetry.addLine("square - intake out");
+        }else{
+            intake.idle();
+        }
+
+
+
+
+
+
+        /*
         - Conveyor Control
             - Most of the time, the conveyor probably should be tied in with other
              systems, however, it's probably wise to also include manual overrides
@@ -126,6 +178,23 @@ public class MecTestMode extends OpMode {
                 - D-pad control preferred
                 - up for up
                 - down for down
+         */
+        //Conveyor Control
+        if(gamepad2.dpad_up){
+            conveyor.runConveyorUpShooting();
+            telemetry.addLine("dpad conveyor up");
+        }else if(gamepad2.dpad_down){
+            conveyor.flushConveyorDown();
+            telemetry.addLine("dpad conveyor down");
+        }else{
+            conveyor.idle();
+        }
+
+
+
+
+
+        /*
         - Shooter control
             - Push button to start acceleration
                 - Shooter does not get up to speed super fast, operator should be
@@ -136,7 +205,18 @@ public class MecTestMode extends OpMode {
                 checkable
             - Push button to stop shooter
             - Do we want/need to be able to spin it backwards during a match?
+            (Probably no - Carl)
+            -CHANGE: Button to shoot is a hold to shooter, release to stop
          */
+        //TODO: Finish Shooter Control
+        if (gamepad2.left_bumper){
+            shooter.setPower(0.9);
+        }else{
+            shooter.setPower(0.0);
+        }
+
+
+
     }
 
     public void getTelemetry() {

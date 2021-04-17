@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -25,14 +25,15 @@ public class WobbleSubsystem {
         this.telemetry = telemetry;
     }
 
-    public void runWobbleIntakeIn(){
+    public void runIntakeIn(){
         wobbleIntakeServos.setPower(-1);
     }
-    public void runWobbleIntakeOut(){
+    public void runIntakeOut(){
         wobbleIntakeServos.setPower(1);
     }
+    public void runIntakeIdle() { wobbleIntakeServos.setPower(0.0); }
 
-    public void setWobbleMotorPower(double speed) {
+    public void setArmPower(double speed) {
         wobbleMotor.setPower(speed);
     }
 
