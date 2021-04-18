@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.ConveyorSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.MecanumDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.ShooterSubsystem;
+import org.firstinspires.ftc.teamcode.Subsystems.TankDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.WobbleSubsystem;
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -22,7 +23,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.WobbleSubsystem;
 public class TankMode extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     BotUtilities utilities;
-    MecanumDrivetrainSubsystem mecdrivetrain;
+    TankDrivetrainSubsystem tankDrivetrain;
     WobbleSubsystem wobble;
     IntakeSubsystem intake;
     ShooterSubsystem shooter;
@@ -33,7 +34,7 @@ public class TankMode extends OpMode {
     /* Code to run ONCE when the driver hits INIT */
     @Override
     public void init() {
-        mecdrivetrain = new MecanumDrivetrainSubsystem(this.hardwareMap, this.telemetry);
+        tankDrivetrain = new TankDrivetrainSubsystem(this.hardwareMap, this.telemetry);
         wobble = new WobbleSubsystem(this.hardwareMap, this.telemetry);
         intake = new IntakeSubsystem(this.hardwareMap, this.telemetry);
         shooter = new ShooterSubsystem(this.hardwareMap, this.telemetry);
@@ -92,7 +93,8 @@ public class TankMode extends OpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     public void checkDriverController() {
-        mecdrivetrain.mecanumDrive_Cartesian(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+        tankDrivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+
         /*
         Desired controller functions:
          - normal mecanum driving with shooter/wobble end of robot as front
