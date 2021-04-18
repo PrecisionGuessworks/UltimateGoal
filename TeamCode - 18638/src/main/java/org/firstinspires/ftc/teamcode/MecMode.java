@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.WobbleSubsystem;
 //@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
-public class MecTestMode extends OpMode {
+public class MecMode extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     BotUtilities utilities;
     MecanumDrivetrainSubsystem mecdrivetrain;
