@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.BotUtilities;
 
 public class TankDrivetrainSubsystem {
-    private DcMotor frontLeft, backLeft, frontRight, backRight;
+    private CRServo frontLeft, backLeft, frontRight, backRight;
     BotUtilities botStuff;
     Telemetry telemetry;
 
@@ -21,15 +22,15 @@ public class TankDrivetrainSubsystem {
     private double m_quickStopAccumulator;
 
     public TankDrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
-        frontLeft  = hardwareMap.get(DcMotor.class, "FL");
-        backLeft  = hardwareMap.get(DcMotor.class, "BL");
-        frontRight = hardwareMap.get(DcMotor.class, "FR");
-        backRight = hardwareMap.get(DcMotor.class, "BR");
+        frontLeft  = hardwareMap.get(CRServo.class, "FL");
+        backLeft  = hardwareMap.get(CRServo.class, "BL");
+        frontRight = hardwareMap.get(CRServo.class, "FR");
+        backRight = hardwareMap.get(CRServo.class, "BR");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(CRServo.Direction.REVERSE);
+        backLeft.setDirection(CRServo.Direction.REVERSE);
+        frontRight.setDirection(CRServo.Direction.FORWARD);
+        backRight.setDirection(CRServo.Direction.FORWARD);
 
 //        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 //        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -52,14 +53,7 @@ public class TankDrivetrainSubsystem {
         setPower(powers[0], powers[1]);
     }
 
-    public int[] readDrivetrainEncoders() {
-        int encoderValues[] = new int[4];
-        encoderValues[1] = botStuff.getEncoderValue(frontLeft);
-        encoderValues[2] = botStuff.getEncoderValue(backLeft);
-        encoderValues[3] = botStuff.getEncoderValue(frontRight);
-        encoderValues[4] = botStuff.getEncoderValue(backRight);
-        return encoderValues;
-    }
+
 
     /**
      * Tank drive method for differential drive platform.
