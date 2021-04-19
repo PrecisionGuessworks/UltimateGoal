@@ -94,6 +94,7 @@ public class TankMode extends OpMode {
 
     public void checkDriverController() {
         //Arcade drive with linear control
+        telemetry.addLine("Updating DriverControl");
         tankDrivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
 
         //Arcade drive with cubic control

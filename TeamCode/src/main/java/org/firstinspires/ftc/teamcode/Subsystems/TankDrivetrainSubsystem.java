@@ -47,6 +47,8 @@ public class TankDrivetrainSubsystem {
         backLeft.setPower(leftSpeed);
         frontRight.setPower(rightSpeed);
         backRight.setPower(rightSpeed);
+        telemetry.addData("setLeft", leftSpeed);
+        telemetry.addData("setRight", rightSpeed);
     }
 
     public void setPower(double[] powers){
@@ -85,6 +87,8 @@ public class TankDrivetrainSubsystem {
         leftMotorOutput = throttle + rotation;
         rightMotorOutput = throttle - rotation;
 
+        telemetry.addData("ArcadeLeft", leftMotorOutput);
+        telemetry.addData( "ArcadeRight", rightMotorOutput);
         double[] motorPowers = {leftMotorOutput, rightMotorOutput};
         setPower(motorPowers);
         return motorPowers;
