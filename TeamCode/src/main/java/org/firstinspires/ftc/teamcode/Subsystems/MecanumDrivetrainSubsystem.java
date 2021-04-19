@@ -20,7 +20,7 @@ public class MecanumDrivetrainSubsystem {
         frontLeft.setDirection(CRServo.Direction.FORWARD);
         backLeft.setDirection(CRServo.Direction.REVERSE);
         frontRight.setDirection(CRServo.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(CRServo.Direction.REVERSE);
 
         botStuff = new BotUtilities(telemtry);
     }
