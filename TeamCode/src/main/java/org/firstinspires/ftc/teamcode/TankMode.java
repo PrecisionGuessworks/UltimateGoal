@@ -93,7 +93,17 @@ public class TankMode extends OpMode {
 //////////////////////////////////////////////////////////////////////////////////////////
 
     public void checkDriverController() {
+        //Arcade drive with linear control
         tankDrivetrain.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+
+        //Arcade drive with cubic control
+        //tankDrivetrain.arcadeDrive(Math.pow(gamepad1.left_stick_y, 3), Math.pow(gamepad1.right_stick_x, 3));
+
+        //Curvature drive with linear control
+        //tankDrivetrain.curvatureDrive(gamepad1.left_stick_y, gamepad1.right_stick_x);
+
+        //Curvature drive with cubic control
+        //tankDrivetrain.curvatureDrive(Math.pow(gamepad1.left_stick_y, 3), Math.pow(gamepad1.right_stick_x, 3));
 
         /*
         Desired controller functions:

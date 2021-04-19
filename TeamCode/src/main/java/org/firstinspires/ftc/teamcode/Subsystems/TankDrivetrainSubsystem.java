@@ -15,6 +15,7 @@ public class TankDrivetrainSubsystem {
     //the importance of them in the algorithm.
     public static final double kDefaultQuickStopThreshold = 0.2;
     public static final double kDefaultQuickStopAlpha = 0.1;
+    public static final double kQuickTurnThreshold = 0.1;
 
     private double m_quickStopThreshold = kDefaultQuickStopThreshold;
     private double m_quickStopAlpha = kDefaultQuickStopAlpha;
@@ -168,6 +169,10 @@ public class TankDrivetrainSubsystem {
         setPower(normalizePowers(leftMotorOutput, rightMotorOutput));
     }
 
+    public void curvatureDrive(double throttle, double rotation){
+        boolean isQuickTurn = throttle > kQuickTurnThreshold;
+        curvatureDrive(throttle, rotation, isQuickTurn);
+    }
 
     public double[] normalizePowers(double left, double right){
         double maxMagnitude = Math.max(Math.abs(left), Math.abs(right));
