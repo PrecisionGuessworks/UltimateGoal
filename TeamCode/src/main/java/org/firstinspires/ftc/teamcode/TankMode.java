@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.TankDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.WobbleSubsystem;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="Mec Mode", group="Mecanum")
+@TeleOp(name="Tank Mode", group="Tank")
 //@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -138,7 +138,7 @@ public class TankMode extends OpMode {
         }
 
         if (Math.abs(gamepad2.left_stick_y) > 0.1){
-            wobble.setArmPower(gamepad2.left_stick_y);
+            wobble.setArmPower(-gamepad2.left_stick_y);
         }else {
             wobble.setArmPower(0.0);
         }
