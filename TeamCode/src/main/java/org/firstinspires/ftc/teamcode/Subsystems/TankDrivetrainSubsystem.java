@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.BotUtilities;
@@ -13,12 +12,12 @@ public class TankDrivetrainSubsystem {
 
     //Important for curvature drive. Need to investigate further
     //the importance of them in the algorithm.
-    public static final double kDefaultQuickStopThreshold = 0.2;
-    public static final double kDefaultQuickStopAlpha = 0.1;
-    public static final double kQuickTurnThreshold = 0.1;
+    public static final double DEFAULTQUICKSTOPTHRESHOLD = 0.2;
+    public static final double DEFAULTQUICKSTOPALPHA = 0.1;
+    public static final double QUICKSTOPTHRESHOLD = 0.1;
 
-    private double m_quickStopThreshold = kDefaultQuickStopThreshold;
-    private double m_quickStopAlpha = kDefaultQuickStopAlpha;
+    private double m_quickStopThreshold = DEFAULTQUICKSTOPTHRESHOLD;
+    private double m_quickStopAlpha = DEFAULTQUICKSTOPALPHA;
     private double m_quickStopAccumulator;
 
     public TankDrivetrainSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -170,7 +169,7 @@ public class TankDrivetrainSubsystem {
     }
 
     public void curvatureDrive(double throttle, double rotation){
-        boolean isQuickTurn = throttle > kQuickTurnThreshold;
+        boolean isQuickTurn = throttle > QUICKSTOPTHRESHOLD;
         curvatureDrive(throttle, rotation, isQuickTurn);
     }
 
