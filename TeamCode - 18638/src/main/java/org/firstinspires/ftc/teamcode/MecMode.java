@@ -125,7 +125,7 @@ public class MecMode extends OpMode {
         }
 
         if (Math.abs(gamepad2.left_stick_y) > 0.1){
-            wobble.setArmPower(gamepad2.left_stick_y);
+            wobble.setArmPower(-gamepad2.left_stick_y);
         }else {
             wobble.setArmPower(0.0);
         }

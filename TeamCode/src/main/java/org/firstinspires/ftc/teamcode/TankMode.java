@@ -162,8 +162,10 @@ public class TankMode extends OpMode {
         //Intake Control
         if(gamepad2.triangle){
             intake.stowIntakeArms();
+            telemetry.addLine("triangle - stow intake");
         }else if(gamepad2.cross){
             intake.deployIntakeArms();
+            telemetry.addLine("cross - deploy intake");
         }else if(Math.abs(gamepad2.right_stick_y) > 0.1){
             intake.manualAdjustArms(gamepad2.right_stick_y/50.0);
         }
