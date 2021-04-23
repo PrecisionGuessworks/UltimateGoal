@@ -99,16 +99,14 @@ public class TestBoardOpMode extends OpMode {
         } else {
             testboard.turnFlashlightOff();
         }
-    }
+    }   // checkDriverController
 
     public void getTelemetry() {
         // Show the elapsed game time
         telemetry.addData("Run Time: ", runtime.toString());
 
-        // Telemetry about motion
-        //telemetry.addData("Motors", "leftFront (%.2f), rightFront (%.2f), rightRear (%.2f), leftRear (%.2f)", telemValues[0], telemValues[1], telemValues[2], telemValues[3]);
         telemetry.update();
     }  // getTelemetry
 
-}    // The Almighty Curly Brace For Everything
+}
 
