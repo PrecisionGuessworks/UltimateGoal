@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.TankDrivetrainSubsystem;
 import org.firstinspires.ftc.teamcode.Subsystems.WobbleSubsystem;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-@TeleOp(name="Mec Mode", group="Mecanum")
+@TeleOp(name="Tank Mode", group="Mecanum")
 //@Disabled        // Comment/Uncomment this line as needed to show/hide this opmode
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,6 +81,7 @@ public class TankMode extends OpMode {
     /* Code to run ONCE after the driver hits STOP */
     @Override
     public void stop() {
+        tankDrivetrain.setPower(0.0, 0.0);
         telemetry.addData("Robot Stopped. ", "Have a nice day.");
         telemetry.addData("Final runtime: ", runtime.toString());
         telemetry.update();
