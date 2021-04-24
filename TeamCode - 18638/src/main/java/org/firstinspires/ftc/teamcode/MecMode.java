@@ -43,7 +43,7 @@ public class MecMode extends OpMode {
         getTelemetry();
 
         // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized    \nEggCheese 2: Electric Boogaloo is ready to play.\n\n:)");
+        telemetry.addData("Status", "Initialized    \nDr. Jekyll is ready to play.\n\n:)");
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ public class MecMode extends OpMode {
         }
 
         if (Math.abs(gamepad2.left_stick_y) > 0.1){
-            wobble.setArmPower(gamepad2.left_stick_y);
+            wobble.setArmPower(-gamepad2.left_stick_y);
         }else {
             wobble.setArmPower(0.0);
         }

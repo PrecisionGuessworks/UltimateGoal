@@ -18,10 +18,10 @@ public class MecanumDrivetrainSubsystem {
         frontRight = hardwareMap.get(CRServo.class, "FR");
         backRight = hardwareMap.get(CRServo.class, "BR");
 
-        frontLeft.setDirection(CRServo.Direction.FORWARD);
-        backLeft.setDirection(CRServo.Direction.REVERSE);
-        frontRight.setDirection(CRServo.Direction.FORWARD);
-        backRight.setDirection(CRServo.Direction.REVERSE);
+        frontLeft.setDirection(CRServo.Direction.REVERSE);
+        backLeft.setDirection(CRServo.Direction.FORWARD);
+        frontRight.setDirection(CRServo.Direction.REVERSE);
+        backRight.setDirection(CRServo.Direction.FORWARD);
 
         botStuff = new BotUtilities(telemtry);
     }

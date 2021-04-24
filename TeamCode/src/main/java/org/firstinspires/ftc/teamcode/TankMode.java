@@ -44,8 +44,8 @@ public class TankMode extends OpMode {
         getTelemetry();
 
         // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized    \nEggCheese 2: Electric Boogaloo is ready to play.\n\n:)");
-    }
+        telemetry.addData("Status", "Initialized    \nMr. Hyde is ready to play.\n\n:)");
+    }//
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -81,7 +81,6 @@ public class TankMode extends OpMode {
     /* Code to run ONCE after the driver hits STOP */
     @Override
     public void stop() {
-        tankDrivetrain.setPower(0.0, 0.0);
         telemetry.addData("Robot Stopped. ", "Have a nice day.");
         telemetry.addData("Final runtime: ", runtime.toString());
         telemetry.update();
@@ -139,7 +138,7 @@ public class TankMode extends OpMode {
         }
 
         if (Math.abs(gamepad2.left_stick_y) > 0.1){
-            wobble.setArmPower(gamepad2.left_stick_y);
+            wobble.setArmPower(-gamepad2.left_stick_y);
         }else {
             wobble.setArmPower(0.0);
         }
@@ -163,8 +162,10 @@ public class TankMode extends OpMode {
         //Intake Control
         if(gamepad2.triangle){
             intake.stowIntakeArms();
+            telemetry.addLine("triangle - stow intake");
         }else if(gamepad2.cross){
             intake.deployIntakeArms();
+            telemetry.addLine("cross - deploy intake");
         }else if(Math.abs(gamepad2.right_stick_y) > 0.1){
             intake.manualAdjustArms(gamepad2.right_stick_y/50.0);
         }

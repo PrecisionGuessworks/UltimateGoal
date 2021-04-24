@@ -9,10 +9,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class IntakeSubsystem {
     private DcMotor intakeMotor;
     private Servo intakeServos;
-    Telemetry telemetry;
+    Telemetry telemetry; //
     //TODO: Check Intake Target Positions
-    private static final double DEPLOYTARGET = 0.5;
-    private static final double STOWTARGET = 1;
+    private static final double DEPLOYTARGET = 1;
+    private static final double STOWTARGET = 0.35;
 
     public IntakeSubsystem(HardwareMap hardwareMap, Telemetry telemetry) {
         // Intake Motor
