@@ -45,7 +45,7 @@ public class TankMode extends OpMode {
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized    \nMr. Hyde is ready to play.\n\n:)");
-    }
+    }//
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
