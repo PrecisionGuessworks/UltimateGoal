@@ -27,6 +27,9 @@ public class ConveyorSubsystem {
         conveyorMotor.setPower(-1);
     }
 
+    public void setBrakeMode() {conveyorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);}
+    public void setCoastMode() {conveyorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);}
+
     public void idle(){
         conveyorMotor.setPower(0.0);
     }
