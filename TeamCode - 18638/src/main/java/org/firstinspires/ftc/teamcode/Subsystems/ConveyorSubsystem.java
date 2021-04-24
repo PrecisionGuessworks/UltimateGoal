@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -27,6 +26,9 @@ public class ConveyorSubsystem {
     public void flushConveyorDown(){
         conveyorMotor.setPower(-1);
     }
+
+    public void setBrakeMode() {conveyorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);}
+    public void setCoastMode() {conveyorMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);}
 
     public void idle(){
         conveyorMotor.setPower(0.0);

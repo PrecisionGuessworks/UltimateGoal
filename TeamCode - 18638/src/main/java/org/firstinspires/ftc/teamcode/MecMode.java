@@ -102,7 +102,7 @@ public class MecMode extends OpMode {
 
     public void checkOperatorController(){
 
-        /*
+       /*
         Desired controller function:
         - The operator has many tasks that need to be mapped
         - Wobble Control
@@ -149,19 +149,28 @@ public class MecMode extends OpMode {
         //Intake Control
         if(gamepad2.triangle){
             intake.stowIntakeArms();
+            telemetry.addLine("triangle - stow intake");
         }else if(gamepad2.cross){
             intake.deployIntakeArms();
+            telemetry.addLine("cross - deploy intake");
         }else if(Math.abs(gamepad2.right_stick_y) > 0.1){
             intake.manualAdjustArms(gamepad2.right_stick_y/50.0);
         }
 
-        if(gamepad2.circle){
+        //Hack: Had to put gamepad1 to prevent the motor from switch on and off.
+        //Needs to be fixed with the use of a schedule and commands
+        if(gamepad2.right_bumper || gamepad1.right_bumper) { //Shooting
             intake.runIntakeIn(0.8);
+        }else if(gamepad2.circle){ //Intaking but not shooting
+            intake.runIntakeIn(0.8);
+            conveyor.setCoastMode();
             telemetry.addLine("circle - intake in");
-        }else if(gamepad2.square){
+        }else if(gamepad2.square) { //Outtaking
             intake.runIntakeOut(0.8);
+            conveyor.setBrakeMode();
             telemetry.addLine("square - intake out");
         }else{
+            conveyor.setBrakeMode();
             intake.idle();
         }
 
@@ -180,7 +189,9 @@ public class MecMode extends OpMode {
                 - down for down
          */
         //Conveyor Control
-        if(gamepad2.dpad_up){
+        if(gamepad2.right_bumper || gamepad1.right_bumper) { //Shooting
+            conveyor.runConveyorUpShooting();
+        }else if(gamepad2.dpad_up){
             conveyor.runConveyorUpShooting();
             telemetry.addLine("dpad conveyor up");
         }else if(gamepad2.dpad_down){
